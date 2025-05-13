@@ -1,0 +1,416 @@
+* {
+    margin: 0;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+html, body {
+    overflow: hidden;
+}
+
+#fondo {
+    background-image: url(./sprites/arcticskies1.png);
+    position: absolute;
+    width: 100vw;
+    height: 120vh;
+    /* top: -280px; */
+    bottom: 20vh;
+    background-repeat: repeat-x;
+    background-size: cover;
+}
+
+/* Mover fondo cuando personaje anda hacia la derecha */
+.moviendoFondo {
+    animation: moviendoFondo 5s infinite linear;
+}
+
+.moviendoFondoRapido {
+    animation: moviendoFondo 2.5s infinite linear;
+}
+
+.moviendoFondoMasRapido {
+    animation: moviendoFondo 1.25s infinite linear;
+}
+
+@keyframes moviendoFondo {
+    from {
+        background-position: 0 0;
+    }
+
+    to {
+        background-position: -100vw 0;
+    }
+}
+
+/* Mover fondo cuando personaje anda hacia la izquierda */
+.moviendoFondo2 {
+    animation: moviendoFondo2 5s infinite linear;
+}
+
+.moviendoFondo2Rapido {
+    animation: moviendoFondo2 2.5s infinite linear;
+}
+
+.moviendoFondo2MasRapido {
+    animation: moviendoFondo2 1.25s infinite linear;
+}
+
+@keyframes moviendoFondo2 {
+    from {
+        background-position: -100vw 0;
+    }
+
+    to {
+        background-position: 0 0;
+    }
+}
+
+#suelo {
+    position: absolute;
+    /* background-color: #aad4e5; */
+    /* Efecto hielo en el suelo */
+    background: linear-gradient(to top, #c0e8ff, #a6ddf0, #8ad4ea);
+    box-shadow: 0px 0px 20px rgba(173, 216, 230, 0.7);
+    width: 100vw;
+    height: 20vh;
+    top: 80vh;
+}
+
+#personaje {
+    position: absolute;
+    width: 48px;
+    height: 76px;
+    top: 72vh;
+    left: 50vw;
+    background-image: url(./sprites/tux.png);
+    background-position-x: 568px;
+    background-position-y: -17px;
+    transition: filter 1s ease;
+}
+
+/* .personajeBrillante {
+    animation: brillar 1s infinite alternate;
+}
+
+@keyframes brillar {
+    from {
+        filter: brightness(100%);
+    }
+
+    50% {
+        filter: brightness(200%);
+    }
+
+    to {
+        filter: brightness(100%);
+    }
+} */
+
+.corriendo {
+    animation: corriendo 500ms infinite steps(1);
+}
+
+.corriendoRapido {
+    animation: corriendo 250ms infinite steps(1);
+}
+
+.corriendoIzquierda {
+    transform: rotateY(180deg);
+    animation: corriendo 500ms infinite steps(1);
+}
+
+.corriendoRapidoIzquierda {
+    transform: rotateY(180deg);
+    animation: corriendo 250ms infinite steps(1);
+}
+
+.corriendoMasRapido {
+    animation: corriendoParpadeo 125ms infinite steps(1);
+}
+
+.corriendoMasRapidoIzquierda {
+    transform: rotateY(180deg);
+    animation: corriendoParpadeo 125ms infinite steps(1);
+}
+
+/* 62px ancho + 3px espacio */
+@keyframes corriendo {
+    from {
+        background-position-x: 568px;
+    }
+
+    12% {
+        background-position-x: 503px;
+    }
+
+    25% {
+        background-position-x: 438px;
+    }
+
+    37% {
+        background-position-x: 373px;
+    }
+
+    50% {
+        background-position-x: 308px;
+    }
+
+    62% {
+        background-position-x: 243px;
+    }
+
+    75% {
+        background-position-x: 178px;
+    }
+
+    87% {
+        background-position-x: 113px;
+    }
+
+    to {
+        background-position-x: 568px;
+    }
+}
+
+@keyframes corriendoParpadeo {
+    from {
+        background-position-x: 568px;
+        filter: brightness(100%);
+    }
+
+    12% {
+        background-position-x: 503px;
+    }
+
+    25% {
+        background-position-x: 438px;
+    }
+
+    37% {
+        background-position-x: 373px;
+    }
+
+    50% {
+        background-position-x: 308px;
+        filter: brightness(200%);
+    }
+
+    62% {
+        background-position-x: 243px;
+    }
+
+    75% {
+        background-position-x: 178px;
+    }
+
+    87% {
+        background-position-x: 113px;
+    }
+
+    to {
+        background-position-x: 568px;
+        filter: brightness(100%);
+    }
+}
+
+#obstaculo {
+    background-image: url(./sprites/wall.png);
+    position: absolute;
+    width: 32px;
+    height: 160px;
+    top: 66vh;
+    left: -40px;
+    /* display: none; */
+}
+
+/* Hacer que aparezcan obstaculos desde la derecha */
+.moviendoObstaculo {
+    animation: moviendoObstaculo 5s infinite linear;
+}
+
+.moviendoObstaculoRapido {
+    animation: moviendoObstaculo 2.5s infinite linear;
+}
+
+.moviendoObstaculoMasRapido {
+    animation: moviendoObstaculo 1.25s infinite linear;
+}
+
+@keyframes moviendoObstaculo {
+    from {
+        left: 100vw;
+    }
+
+    to {
+        left: 0vw;
+    }
+}
+
+/* Hacer que aparezcan obstaculos desde la izquierda */
+.moviendoObstaculo2 {
+    animation: moviendoObstaculo2 5s infinite linear;
+}
+
+.moviendoObstaculo2Rapido {
+    animation: moviendoObstaculo2 2.5s infinite linear;
+}
+
+.moviendoObstaculo2MasRapido {
+    animation: moviendoObstaculo2 1.25s infinite linear;
+}
+
+@keyframes moviendoObstaculo2 {
+    from {
+        left: 0vw;
+    }
+
+    to {
+        left: 100vw;
+    }
+}
+
+/* Hacer que el personaje salte cuando anda hacia la derecha */
+.saltando {
+    animation: saltando 1s ease;
+}
+
+.saltandoRapido {
+    animation: saltando 500ms ease;
+}
+
+.saltandoMasRapido {
+    animation: saltandoParpadeo 250ms ease;
+}
+
+@keyframes saltando {
+    from {
+        background-position-x: 812px;
+        background-position-y: -118px;
+    }
+
+    50% {
+        top: 55vh;
+    }
+
+    to {
+        background-position-x: 812px;
+        background-position-y: -118px;
+    }
+}
+
+@keyframes saltandoParpadeo {
+    from {
+        background-position-x: 812px;
+        background-position-y: -118px;
+    }
+
+    50% {
+        top: 55vh;
+        filter: brightness(200%);
+    }
+
+    to {
+        background-position-x: 812px;
+        background-position-y: -118px;
+    }
+}
+
+
+/* Hacer que el personaje salte cuando anda hacia la izquierda */
+
+.saltandoIzquierda {
+    transform: rotateY(180deg);
+    animation: saltandoIzquierda 1s ease;
+}
+
+.saltandoIzquierdaRapido {
+    transform: rotateY(180deg);
+    animation: saltandoIzquierda 500ms ease;
+}
+
+.saltandoIzquierdaMasRapido {
+    transform: rotateY(180deg);
+    animation: saltandoIzquierdaParpadeo 250ms ease;
+}
+
+
+@keyframes saltandoIzquierda {
+    from {
+        background-position-x: 812px;
+        background-position-y: -118px;
+    }
+
+    50% {
+        top: 55vh;
+    }
+
+    to {
+        background-position-x: 812px;
+        background-position-y: -118px;
+    }
+}
+
+@keyframes saltandoIzquierdaParpadeo {
+    from {
+        background-position-x: 812px;
+        background-position-y: -118px;
+    }
+
+    50% {
+        top: 55vh;
+        filter: brightness(200%);
+    }
+
+    to {
+        background-position-x: 812px;
+        background-position-y: -118px;
+    }
+}
+
+#puntuacion {
+    position: absolute;
+    top: 50px;
+    left: 50vw;
+    font-size: 3rem;
+}
+
+/* 
+#puntuacion::before {
+    content: 'Puntuacion:';
+} */
+
+/* Control del sonido */
+#sonido {
+    background-repeat: no-repeat;
+    background-size: contain;
+    position: absolute;
+    top: 5vh;
+    left: 90vw;
+    width: 5vw;
+    height: 5vh;
+    z-index: 1;
+}
+
+.sonidoOn {
+    background-image: url(./sprites/volume-level.png);
+}
+
+.sonidoOff {
+    background-image: url(./sprites/volume-off-indicator.png);
+}
+
+/* Fin de la partida */
+#fin {
+    position: absolute;
+    width: 70vw;
+    height: 30vh;
+    background-color: cadetblue;
+    text-align: center;
+    font-size: 3rem;
+    line-height: 30vh;
+    top: calc(50% - 15vh);
+    left: calc(50% - 35vw);
+    border: 10px solid black;
+    border-radius: 20px;
+    visibility: hidden;
+    z-index: 10;
+}

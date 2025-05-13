@@ -1,0 +1,144 @@
+$(document).ready(function () {
+    const cancion = document.getElementById("cancion");
+    let puntuacion = 0;
+    let segundos = 0; // contador
+    let tiempo = 1; // variable para pasar a setTimeout
+    let tiempoSalto = 2;
+    let temporizadorID;
+    let temporizadores = [];
+    let juegoActivo = true;
+    inicio();
+    /* Botón de sonido */
+    $('#sonido').click(function () {
+        if ($('#sonido').hasClass('sonidoOff')) {
+            $('#sonido').removeClass('sonidoOff');
+            $('#sonido').addClass('sonidoOn');
+            cancion.play();
+        } else {
+            $('#sonido').removeClass('sonidoOn');
+            $('#sonido').addClass('sonidoOff');
+            cancion.pause();
+        }
+    });
+
+
+    function inicio() {
+        $('#sonido').addClass('sonidoOff');
+        $('#personaje').addClass('corriendo');
+        $('#fondo').addClass('moviendoFondo');
+        $('#obstaculo').addClass('moviendoObstaculo');
+        ejecutar();
+        /* Intervalos para mover personaje, fondo y obstaculos */
+        function ejecutar() {
+            if (!juegoActivo) {
+                return; // salir de ejecutar() si se ha acabado la partida
+            }
+            segundos++;
+            tiempoSalto++;
+            /* if (tiempo == 1) { //////////////////////////////////// VELOCIDAD NORMAL */
+            if (segundos < 25) { // Cinco saltos // VELOCIDAD NORMAL DERECHA /// Punto A)
+                tiempo = 1;
+                if (tiempoSalto % 5 == 0) { // saltar
+                    puntuacion++;
+                    $('#personaje').removeClass('corriendo').addClass('saltando');
+                } else {
+                    $('#personaje').removeClass('saltando').addClass('corriendo');
+                }
+            } else if (segundos >= 25 && segundos < 50) { // Diez saltos // VELOCIDAD NORMAL IZQUIERDA // Punto B)
+                borrarTodasClases();
+                if (segundos == 26)
+                    tiempoSalto++; // corregir tiempo de salto
+                $('#personaje').addClass('corriendoIzquierda');
+                $('#fondo').addClass('moviendoFondo2');
+                $('#obstaculo').addClass('moviendoObstaculo2');
+                if (tiempoSalto % 5 == 0) { // saltar
+                    puntuacion++;
+                    $('#personaje').removeClass('corriendoIzquierda').addClass('saltandoIzquierda');
+                } else {
+                    $('#personaje').removeClass('saltandoIzquierda').addClass('corriendoIzquierda');
+                }
+            } else if (segundos >= 50 && segundos < 75) { ////////// VELOCIDAD RAPIDA DERECHA // Punto C)
+                tiempo = 0.5; // aumentar velocidad
+                cancion.playbackRate = 1.5; // velocidad de reproduccion de audio
+                borrarTodasClases();
+                $('#personaje').addClass('corriendoRapido');
+                $('#fondo').addClass('moviendoFondoRapido');
+                $('#obstaculo').addClass('moviendoObstaculoRapido');
+                if (tiempoSalto % 5 === 0) { // saltar
+                    puntuacion++;
+                    $('#personaje').removeClass('corriendoRapido').addClass('saltandoRapido');
+                } else {
+                    $('#personaje').removeClass('saltandoRapido').addClass('corriendoRapido');
+                }
+            } else if (segundos >= 75 && segundos < 100) { ////////// VELOCIDAD RAPIDA IZQUIERDA // Punto D)
+                tiempo = 0.5;
+                borrarTodasClases();
+                $('#personaje').addClass('corriendoRapidoIzquierda');
+                $('#fondo').addClass('moviendoFondo2Rapido');
+                $('#obstaculo').addClass('moviendoObstaculo2Rapido');
+                if (tiempoSalto % 5 === 0) { // saltar
+                    puntuacion++;
+                    $('#personaje').removeClass('corriendoRapidoIzquierda').addClass('saltandoIzquierdaRapido');
+                } else {
+                    $('#personaje').removeClass('saltandoIzquierdaRapido').addClass('corriendoRapidoIzquierda');
+                }
+            } else if (segundos >= 100 && segundos < 125) { ////////// VELOCIDAD MAS RAPIDA DERECHA // Punto E)
+                tiempo = 0.25;
+                borrarTodasClases();
+                $('#personaje').addClass('corriendoMasRapido');
+                $('#fondo').addClass('moviendoFondoMasRapido');
+                $('#obstaculo').addClass('moviendoObstaculoMasRapido');
+                if (tiempoSalto % 5 === 0) { // saltar
+                    puntuacion++;
+                    $('#personaje').removeClass('corriendoMasRapido').addClass('saltandoMasRapido');
+                } else {
+                    $('#personaje').removeClass('saltandoMasRapido').addClass('corriendoMasRapido');
+                }
+            } else if (segundos >= 125 && segundos < 150) { ////////// VELOCIDAD MAS RAPIDA IZQUIERDA // Punto F)
+                tiempo = 0.25;
+                borrarTodasClases();
+                $('#personaje').addClass('corriendoMasRapidoIzquierda');
+                $('#fondo').addClass('moviendoFondo2MasRapido');
+                $('#obstaculo').addClass('moviendoObstaculo2MasRapido');
+                if (tiempoSalto % 5 === 0) { // saltar
+                    puntuacion++;
+                    $('#personaje').removeClass('corriendoMasRapidoIzquierda').addClass('saltandoIzquierdaMasRapido');
+                } else {
+                    $('#personaje').removeClass('saltandoIzquierdaMasRapido').addClass('corriendoMasRapidoIzquierda');
+                }
+            } else {
+                // FIN DE LA PARTIDA
+                parar();
+                juegoActivo = false;
+            }
+
+            /* Puntuación */
+            if (puntuacion < 10)
+                $('#puntuacion').text("0".concat(puntuacion));
+            else
+                $('#puntuacion').text(puntuacion);
+            if (juegoActivo) {
+                temporizadorID = setTimeout(ejecutar, tiempo * 1000); // llamada recursiva a la funcion ejecutar(), pudiendo cambiar el tiempo en el que se ejecuta
+                temporizadores.push(temporizadorID); // guardar temporizadores
+            }
+        } // fin ejecutar()
+    } // fin inicio()
+
+    function borrarTodasClases() {
+        $('#personaje').removeClass();
+        $('#fondo').removeClass();
+        $('#obstaculo').removeClass();
+    }
+
+    function parar() {
+        $('#personaje').removeClass();
+        $('#fondo').removeClass();
+        $('#obstaculo').removeClass();
+        cancion.pause();
+        cancion.currentTime = 0;
+        $('#fin').css('visibility', 'visible');
+        temporizadores.forEach(temporizador => { // liberar temporizadores
+            clearTimeout(temporizador);
+        });
+    }
+});
